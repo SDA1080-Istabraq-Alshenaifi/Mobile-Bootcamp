@@ -310,7 +310,7 @@ The basic syntax for declaring a function as follows:
 ```md
 func functionName(parameters: ParameterType) -> ReturnType
 { // Function body return someValue }
-``
+```
 - **Function Name:** A descriptive name for the function, following Swift's naming conventions.
 - **Parameters:** Input values that the function can accept. These are enclosed in parentheses and separated by commas.
 - **Return Type:** The data type of the value the function returns. If a function doesn't return a value, use **Void** or omit the return type.
