@@ -4,29 +4,61 @@
 
 ***Syntax:***  
 ```md
-```swift
-let Variable\_name
+let Variable_name
 ```
 ```
-         ***Example:***  let days\_In\_Week = 7
+***Example:***
+```md
+let days_In_Week = 7
+```
+```
 
 ***Variable:*** it is start with the keyword ***var***
 
-***Syntax:***  var Variable\_name         ***Example:***  var  days\_in\_Month=30
+***Syntax:***
+```md
+var Variable_name
+```
+```
+***Example:***
+```md
+var  days_in_Month=30
+```
+```
+***Type annotation:*** we can declare a constant or variable, but we give a hint of what variable or constant type of storing the values (string, int, double…etc).
 
-Type annotation: we can declare a constant or variable, but we give a hint of what variable or constant type of storing the values (string, int, double…etc).
+***Syntax***:
+```md
+var Variable_name: Type of the Variable
+```
+```
+***Example:***
+```md
+var days_in_week : Int = 7
+```
+```
+***Type inference:*** We declare constant or variables based on its initial value and the compiler will figure it out.
 
-***Syntax***: var Variable\_name: Type of the Variable
-***Example:***  var days\_in\_week : Int = 7
-
-Type inference:  
-
-We declare constant or variables based on its initial value and the compiler will figure it out.
-
-***Syntax:*** Let variable\_name = value     ***Example:***  let Day\_in\_week=7
-
-***Syntax:***  var Variable\_name=value         ***Example:***  var  days\_in\_Month=30
-
+***Syntax:***
+```md
+let variable_name = value
+```
+```
+***Example:***
+```md
+let Day_in_week=7
+```
+```
+***Syntax:***
+```md
+var Variable_name=value
+```
+```
+***Example:***
+```md
+var  days_in_Month=30
+```
+```
 **Data Types in Swift**:
 common data types include whole numbers ***(Integers)***, numbers with ***decimals (Floats and Doubles)***, true/false values ***(Booleans),*** sequences of characters ***(Strings)***, and collections like Arrays and Dictionaries.
 
