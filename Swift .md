@@ -305,11 +305,13 @@ if number % 2 == 0 {
 print(number)
 }
 ```
-**Declaring Functions:**
+***Declaring Functions:***
 The basic syntax for declaring a function as follows:
 ```md
-func functionName(parameters: ParameterType) -> ReturnType
-{ // Function body return someValue }
+func functionName(parameters: ParameterType) -> ReturnType {
+    // Function body
+    return someValue
+}
 ```
 - **Function Name:** A descriptive name for the function, following Swift's naming conventions.
 - **Parameters:** Input values that the function can accept. These are enclosed in parentheses and separated by commas.
@@ -317,7 +319,7 @@ func functionName(parameters: ParameterType) -> ReturnType
 **Example:**
 ```md
 func greet(name: String) -> String {
-return "Hello, \(name)!"
+    return "Hello, \(name)!"
 }
 let greeting = greet(name: "John")
 print(greeting)
@@ -326,18 +328,20 @@ print(greeting)
 Functions can have multiple parameters, each with its own data type. Also it is provide default values for parameters, making them optional.
 ```md
 func addNumbers(a: Int, b: Int = 0) -> Int {
- return a + b
+    return a + b
 }
+
 let result = addNumbers(a: 5) // Result is 5
 ```
 **Return Types:**
 Functions in Swift can return values using the **return** keyword. If a function doesn't return a value,it can omit the return type or use **Void**.
 ```md
 func noReturnValue() {
- // Function with no return value
+    // Function with no return value
 }
- func multiply(a: Int, b: Int) -> Int {
-return a \* b
+
+func multiply(a: Int, b: Int) -> Int {
+    return a * b
 }
 ```
 **External and Internal Parameter Names:**
@@ -345,55 +349,39 @@ Both external and internal parameter names for a function can be specify.
 External parameter names are used when calling the function, while internal names are used within the function body.
 ```md
 func calculateSum(of a: Int, and b: Int) -> Int {
-return a + b
+    return a + b
 }
-let sum = calculateSum(of: 3, and: 4) // External names are used when calling 
+let sum = calculateSum(of: 3, and: 4) // External names are used when calling
 ```
 **Variadic Parameters:**
 Functions can accept a variable number of parameters using variadic parameters. These are denoted by appending **...** to the parameter's type.
 ```md
-func average(Thisnumbers: Double...) -> Double {
- let total = thisnumbers.reduce(0.0, +) return total / Double(rhisnumbers.count)
+func average(numbers: Double...) -> Double {
+    let total = numbers.reduce(0.0, +)
+    return total / Double(numbers.count)
 }
-let avg = average(1.0, 2.0, 3.0, 4.0) // Average is 2.5 
+
+let avg = average(numbers: 1.0, 2.0, 3.0, 4.0) // Average is 2.5
 ```
 **In-Out Parameters:**
 Ability to modify the value of a parameter outside the function by using the **inout** keyword.
 ```md
-func increment(thisvalue: inout Int) {
-thisvalue += 1 }
-var number = 5 increment(&thisnumber) // Now, 'number' is 6 
+func increment(thisValue: inout Int) {
+    thisValue += 1
+}
+
+var number = 5
+increment(thisValue: &number) // Now, 'number' is 6
 ```
 **Nested Functions:**
 Swift allows the definition of functions inside other functions. These nested functions are only accessible within the outer function.
 ```md
-func outerFunction() -> String
-{
-func innerFunction()
-{ // Code for the inner function
- } // Code for the outer function return "Result"
- }
-```
-**Function Overloading:**
-function overloading, which allows to define multiple functions with the same name but different parameter types or numbers of parameters.
-```md
-func greet(person: String) -> String {
-return "Hello, \(person)!"
-}
-func greet(person: String, from location: String) -> String
-{ return "Hello, \(person)! Welcome to \(location)."
+func outerFunction() -> String {
+    func innerFunction() {
+        // Code for the inner function
+    }
+    
+    // Code for the outer function
+    return "Result"
 }
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
