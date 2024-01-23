@@ -2,7 +2,13 @@
 
 ***Constant:*** it is start with the keyword ***let***
 
-***Syntax:***  let Variable\_name            ***Example:***  let days\_In\_Week = 7
+***Syntax:***  
+```md
+```swift
+let Variable\_name
+```
+```
+         ***Example:***  let days\_In\_Week = 7
 
 ***Variable:*** it is start with the keyword ***var***
 
