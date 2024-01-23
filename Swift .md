@@ -6,11 +6,9 @@
 ```md
 let Variable_name
 ```
-```
 ***Example:***
 ```md
 let days_In_Week = 7
-```
 ```
 
 ***Variable:*** it is start with the keyword ***var***
@@ -19,11 +17,9 @@ let days_In_Week = 7
 ```md
 var Variable_name
 ```
-```
 ***Example:***
 ```md
 var  days_in_Month=30
-```
 ```
 ***Type annotation:*** we can declare a constant or variable, but we give a hint of what variable or constant type of storing the values (string, int, double…etc).
 
