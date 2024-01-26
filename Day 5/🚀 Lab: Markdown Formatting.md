@@ -48,16 +48,3 @@ print(formatMarkdown("Hello", format: .Link))
 print(formatMarkdown("Hello", format: .image))
 print(formatMarkdown("Hello", format: .blockquote))
 ```
-***Output***
-<code>
-# Hello
-**Hello**
-<em>Hello</em>
-* Hello
-`Hello`
-~~Hello.~~
-<Hello@tuwaiq.edu.sa>
-[title](https://tuwaiq.edu.sa/)
-![alt text](Hello.jpg)
-> Hello
-</code>
