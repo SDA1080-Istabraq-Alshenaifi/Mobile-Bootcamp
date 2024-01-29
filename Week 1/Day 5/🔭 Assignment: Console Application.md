@@ -1,8 +1,8 @@
 ```md
-// ParkingSpace Struct
-struct ParkingSpace {
-    var number: Int
-    var isOccupied: Bool
+// ParkingSpace Enum
+enum ParkingSpace {
+    case available
+    case notAvailable
 }
 
 // Driver Struct
@@ -11,106 +11,165 @@ struct Driver {
     var licenseNumber: String
 }
 
+// Vehicle Struct
+struct Vehicle {
+    var plateNumber: String
+    var model: String
+}
+
+// Payment Struct
+struct Payment {
+    var amount: Double
+    var method: String
+}
+
+// ParkingArea Class
+class ParkingArea {
+    var spaces: [ParkingSpace]
+
+    init(spaces: [ParkingSpace]) {
+        self.spaces = spaces
+    }
+
+    func viewAvailableSpaces() {
+        print("Available parking spaces:")
+        for index in 0..<spaces.count {
+            let space = spaces[index]
+            let spaceStatus: String = (space == .available) ? "Available" : "Not Available"
+            print("Space \(index + 1): \(spaceStatus)")
+        }
+    }
+
+    // Higher-order function: Filter available spaces
+    func filterAvailableSpaces() -> [Int] {
+        return spaces.enumerated().compactMap { $0.element == .available ? $0.offset + 1 : nil }
+    }
+}
+
 // ParkingLot Class
 class ParkingLot {
-    var spaces: [ParkingSpace]
+    var areas: [ParkingArea]
     var drivers: [Driver]
-    
-    init(spaces: [ParkingSpace], drivers: [Driver]) {
-        self.spaces = spaces
+
+    init(areas: [ParkingArea], drivers: [Driver]) {
+        self.areas = areas
         self.drivers = drivers
     }
-    
-    func viewAvailableSpaces() {
-        let availableSpaces = spaces.filter { !$0.isOccupied }
-        print("Available parking spaces:")
-        availableSpaces.forEach { print("Space \($0.number)") }
-    }
-    
-    func selectSpace(driver: Driver, spaceNumber: Int) {
-        if let index = spaces.firstIndex(where: { $0.number == spaceNumber && !$0.isOccupied }) {
-            spaces[index].isOccupied = true
-            print("\(driver.name) has selected space \(spaceNumber)")
-        } else {
-            print("Space \(spaceNumber) is not available or does not exist.")
-        }
-    }
-    
-    func bookTicket(driver: Driver) {
-        viewAvailableSpaces()
-        print("Enter the number of the space you want to book:")
-        if let spaceNumber = Int(readLine() ?? ""), spaceNumber > 0 && spaceNumber <= spaces.count {
-            selectSpace(driver: driver, spaceNumber: spaceNumber)
-        } else {
-            print("Invalid space number.")
-        }
-    }
-    
+
     func viewBookedTickets() {
-        let bookedSpaces = spaces.filter { $0.isOccupied }
         print("Booked parking spaces:")
-        bookedSpaces.forEach { print("Space \($0.number)") }
+        for (areaIndex, area) in areas.enumerated() {
+            print("Area \(areaIndex + 1):")
+            area.viewAvailableSpaces()
+        }
     }
-    
-    func cancelTicket(driver: Driver) {
-        viewBookedTickets()
-        print("Enter the number of the space you want to cancel:")
-        if let spaceNumber = Int(readLine() ?? ""), spaceNumber > 0 && spaceNumber <= spaces.count {
-            if let index = spaces.firstIndex(where: { $0.number == spaceNumber && $0.isOccupied }) {
-                spaces[index].isOccupied = false
-                print("\(driver.name) has canceled space \(spaceNumber)")
-            } else {
-                print("Space \(spaceNumber) is not booked.")
-            }
-        } else {
+
+    // Higher-order function: Map driver names
+    func mapDriverNames() -> [String] {
+        return drivers.map { $0.name }
+    }
+
+    // Function to book a parking space
+    func bookSpace(driver: Driver, spaceNumber: Int) {
+        let index = spaceNumber - 1
+        guard index >= 0 && index < areas.first!.spaces.count else {
             print("Invalid space number.")
+            return
+        }
+
+        if areas.first!.spaces[index] == .available {
+            areas.first!.spaces[index] = .notAvailable
+            print("\(driver.name) has booked space \(spaceNumber)")
+        } else {
+            print("Space \(spaceNumber) is not available.")
+        }
+    }
+
+    // Function to cancel a booking
+    func cancelSpace(driver: Driver, spaceNumber: Int) {
+        let index = spaceNumber - 1
+        guard index >= 0 && index < areas.first!.spaces.count else {
+            print("Invalid space number.")
+            return
+        }
+
+        if areas.first!.spaces[index] == .notAvailable {
+            areas.first!.spaces[index] = .available
+            print("\(driver.name) has canceled space \(spaceNumber)")
+        } else {
+            print("Space \(spaceNumber) is not booked.")
         }
     }
 }
 
 // Sample Data
-let parkingSpaces = (1...20).map { ParkingSpace(number: $0, isOccupied: false) }
-let drivers = [Driver(name: "John", licenseNumber: "12345"), Driver(name: "Alice", licenseNumber: "67890")]
+let parkingSpaces = Array(repeating: ParkingSpace.available, count: 20)
+let parkingArea = ParkingArea(spaces: parkingSpaces)
+let driver1 = Driver(name: "Ahmed", licenseNumber: "12345")
+let driver2 = Driver(name: "Norah", licenseNumber: "67890")
+let driver3 = Driver(name: "Sarah", licenseNumber: "58785")
+let drivers = [driver1, driver2, driver3]
 
 // Initialize Parking Lot
-let parkingLot = ParkingLot(spaces: parkingSpaces, drivers: drivers)
+let parkingLot = ParkingLot(areas: [parkingArea], drivers: drivers)
 
 // Console Interface
 func displayMenu() {
     print("Welcome to Parking Lot Management System!\n")
-    print("1. View Available Spaces")
-    print("2. Book Ticket")
-    print("3. View Booked Tickets")
-    print("4. Cancel Ticket")
-    print("5. Exit\n")
+    print("1. View Booked Tickets")
+    print("2. Filter Available Spaces")
+    print("3. Map Driver Names")
+    print("4. Book Space")
+    print("5. Cancel Space")
+    print("6. Exit\n")
     print("Choose an option:")
 }
 
 func main() {
     var shouldExit = false
-    
+
     while !shouldExit {
         displayMenu()
-        
+
         if let choice = readLine(), let option = Int(choice) {
             switch option {
             case 1:
-                parkingLot.viewAvailableSpaces()
+                parkingLot.viewBookedTickets()
             case 2:
-                if let driver = drivers.first {
-                    parkingLot.bookTicket(driver: driver)
+                print("Filtering available spaces:")
+                let availableSpaces = parkingLot.areas.first!.filterAvailableSpaces()
+                if availableSpaces.isEmpty {
+                    print("No available spaces.")
                 } else {
-                    print("No drivers registered.")
+                    print("Available Spaces: \(availableSpaces)")
                 }
             case 3:
-                parkingLot.viewBookedTickets()
+                print("Mapping driver names:")
+                let driverNames = parkingLot.mapDriverNames()
+                print("Driver Names: \(driverNames)")
             case 4:
-                if let driver = drivers.first {
-                    parkingLot.cancelTicket(driver: driver)
-                } else {
-                    print("No drivers registered.")
+                print("Enter your name:")
+                if let name = readLine() {
+                    let driver = Driver(name: name, licenseNumber: "00000") // Dummy license number
+                    print("Enter space number to book:")
+                    if let spaceInput = readLine(), let spaceNumber = Int(spaceInput) {
+                        parkingLot.bookSpace(driver: driver, spaceNumber: spaceNumber)
+                    } else {
+                        print("Invalid space number.")
+                    }
                 }
             case 5:
+                print("Enter your name:")
+                if let name = readLine() {
+                    let driver = Driver(name: name, licenseNumber: "00000") // Dummy license number
+                    print("Enter space number to cancel booking:")
+                    if let spaceInput = readLine(), let spaceNumber = Int(spaceInput) {
+                        parkingLot.cancelSpace(driver: driver, spaceNumber: spaceNumber)
+                    } else {
+                        print("Invalid space number.")
+                    }
+                }
+            case 6:
                 shouldExit = true
                 print("Exiting...")
             default:
